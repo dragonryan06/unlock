@@ -1,19 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://fynn4bqfvy7q"]
+[gd_scene load_steps=8 format=3 uid="uid://fynn4bqfvy7q"]
 
 [ext_resource type="Script" path="res://key.gd" id="1_1qass"]
 [ext_resource type="Texture2D" uid="uid://buhtrqyv8ogou" path="res://lockbase1.svg" id="1_3dmgk"]
 [ext_resource type="Shader" path="res://key.gdshader" id="4_b3hbx"]
+[ext_resource type="PackedScene" uid="uid://dr23l1a85amup" path="res://key_handle1_hitbox.tscn" id="4_erics"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wwkdj"]
 rough = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mg5nb"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gm3ix"]
 shader = ExtResource("4_b3hbx")
-shader_parameter/blink = true
+shader_parameter/blink = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wlba5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rywy2"]
 shader = ExtResource("4_b3hbx")
-shader_parameter/blink = true
+shader_parameter/blink = false
 
 [node name="Key" type="RigidBody2D"]
 input_pickable = true
@@ -22,31 +23,34 @@ center_of_mass_mode = 1
 center_of_mass = Vector2(8, 0)
 freeze_mode = 1
 contact_monitor = true
-max_contacts_reported = 8
+max_contacts_reported = 64
 script = ExtResource("1_1qass")
 
 [node name="Handle" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_mg5nb")
+material = SubResource("ShaderMaterial_gm3ix")
 position = Vector2(3.55271e-15, 1)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_3dmgk")
 
 [node name="Teeth" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_wlba5")
+material = SubResource("ShaderMaterial_rywy2")
 position = Vector2(22, -0.465302)
 scale = Vector2(0.05, 0.05)
 polygon = PackedVector2Array(1000, -167, 0, -167, 0, 186, 75, 120.227, 150, 197.646, 225, 116.887, 300, 187.294, 375, 170.873, 450, 101.871, 525, 123.187, 600, 154.225, 675, 163.711, 750, 178.433, 825, 161.739, 900, 186.471, 975, 165.361, 1000, 0, 1000, -167)
 uv = PackedVector2Array(1000, -167, 0, -167, 0, 186, 75, 120.227, 150, 197.646, 225, 116.887, 300, 187.294, 375, 170.873, 450, 101.871, 525, 123.187, 600, 154.225, 675, 163.711, 750, 178.433, 825, 161.739, 900, 186.471, 975, 165.361, 1000, 0, 1000, -167)
 
-[node name="TeethBox" type="CollisionPolygon2D" parent="."]
+[node name="Hitbox" parent="." instance=ExtResource("4_erics")]
+polygon = PackedVector2Array(45, -223, 45, -219.9, 81, -200.8, 81, -197.1, 133.6, -104.9, 227, -99.6, 227, -98.5, 720, -98.5, 720, 78, 227, 78, 227, 80, 206.9, 80, 138.5, 87.4, 81.7, 189, 77, 189, 35, 212, 28.7, 212, -28, 216.7, -28, 211.8, -87, 181.9, -87, 176.8, -117.2, 112, -202, 62.6, -202, 57.5, -224, 3.60001, -224, -17.2, -208.9, -66, -205.4, -66, -169.3, -102, -165.4, -102, -117.5, -121.1, -76.9, -200, -73.1, -200, -25, -226.8, -25, -232.1)
+
+[node name="TeethArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TeethArea"]
 position = Vector2(22, -0.465302)
 scale = Vector2(0.05, 0.05)
 polygon = PackedVector2Array(1000, -167, 0, -167, 0, 186, 75, 120.227, 150, 197.646, 225, 116.887, 300, 187.294, 375, 170.873, 450, 101.871, 525, 123.187, 600, 154.225, 675, 163.711, 750, 178.433, 825, 161.739, 900, 186.471, 975, 165.361, 1000, 0, 1000, -167)
-
-[node name="HandleBox" type="CollisionPolygon2D" parent="."]
-position = Vector2(3.55271e-15, 1)
-scale = Vector2(0.1, 0.1)
-polygon = PackedVector2Array(12, -231.9, -16.5, -233, -19, -233, -19, -231.7, -35.4, -228, -38.6, -228, -61.6, -213, -63.9, -213, -78.9, -197, -80.1, -197, -94.1, -176, -95.3, -176, -118, -124.4, -118, -123.5, -145.4, -114, -148.5, -114, -167.5, -103, -169.7, -103, -187.7, -88, -190, -88, -210, -63, -211.4, -63, -220.4, -40, -221.7, -40, -226, -16.2, -226, 2.2, -219, 31, -219, 34.6, -203, 59.6, -203, 61.9, -184, 79.9, -184, 81.1, -170, 90.1, -170, 91.3, -147, 102.2, -147, 103.4, -118.3, 113, -117.5, 113, -115, 124, -115, 128.4, -103, 156.3, -103, 158.7, -88, 178.6, -88, 180.9, -74, 193.9, -74, 195.2, -47, 210.1, -47, 211.6, -22, 216.6, -22, 218, 9.2, 218, 28.4, 214, 33.4, 214, 63.3, 201, 65.7, 201, 78.7, 190, 81, 190, 102, 164, 103.4, 164, 114.4, 136, 115.7, 136, 120, 113.2, 120, 109.6, 129, 97.7, 129, 95.9, 138, 89, 138, 88.4, 153, 83.4, 226.1, 80, 229, 80, 229, -99.9, 154, -102, 142.5, -102, 134.5, -106, 133, -106, 123, -120, 122.4, -120, 106, -166.5, 106, -168.7, 92, -187.7, 92, -189.9, 78, -203, 78, -204.1, 62, -214.2, 62, -215.4, 39, -224.4, 39, -225.7, 12, -230.8)
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -35,6 +35,8 @@ extends RigidBody2D
 
 var mouse_hover = false
 var mouse_drag = false
+# store the last 5 or so frames of mouse speed to average them and surpress jerk
+var mouse_last_velocities = []
 
 func _ready() -> void:
 	$Handle.material = $Handle.material.duplicate()
@@ -42,6 +44,8 @@ func _ready() -> void:
 	generate_teeth()
 
 func generate_teeth() -> void:
+	remove_child($Hitbox)
+	add_child(load("res://key_handle1_hitbox.tscn").instantiate())
 	if has_node("Teeth"):
 		seed(key_seed)
 		var poly = []
@@ -49,13 +53,26 @@ func generate_teeth() -> void:
 		poly.append(Vector2(0,key_top_offset))
 		poly.append(Vector2(0,key_leftmost_node))
 		
+		var last_height = 0
 		for i in range(key_resolution,key_length,key_resolution):
-			poly.append(Vector2(i,randf_range(100.0,200.0)*key_amplitude))
+			last_height = randf_range(100.0,200.0)*key_amplitude
+			poly.append(Vector2(i,last_height))
 		
 		poly.append(Vector2(key_length,0))
 		poly.append(Vector2(key_length,key_top_offset))
 		$Teeth.set_polygon(PackedVector2Array(poly))
-		$TeethBox.set_polygon(PackedVector2Array(poly))
+		$TeethArea/CollisionPolygon2D.set_polygon(PackedVector2Array(poly))
+		
+		
+		var simplified_teeth = PackedVector2Array([])
+		simplified_teeth.append(Vector2(-64,key_leftmost_node*0.5)+Vector2(22,-1.5)*10.0)
+		simplified_teeth.append(Vector2(key_length*0.5,key_leftmost_node*0.5)+Vector2(22,-1.5)*10.0)
+		simplified_teeth.append(Vector2(key_length*0.5,key_top_offset*0.5)+Vector2(22,-1.5)*10.0)
+		simplified_teeth.append(Vector2(-64,key_top_offset*0.5)+Vector2(22,-1.5)*10.0)
+		$Hitbox.set_polygon(Geometry2D.merge_polygons(simplified_teeth,$Hitbox.polygon)[0])
+		#hit_poly.insert(34,Vector2(key_length,last_height))
+		#hit_poly.insert(35,Vector2(key_length,key_top_offset))
+		#$Hitbox.set_polygon(PackedVector2Array(Geometry2D.merge_polygons($Hitbox.polygon, simplified_teeth)))
 
 func _input(event:InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -65,14 +82,22 @@ func _input(event:InputEvent) -> void:
 		elif mouse_drag:
 			mouse_drag = false
 			freeze = false
-			apply_central_impulse(Input.get_last_mouse_velocity())
+			var total_velocity = Vector2(0,0)
+			for v in mouse_last_velocities:
+				total_velocity+=v
+			total_velocity+=Input.get_last_mouse_velocity()
+			apply_central_impulse(total_velocity/(len(mouse_last_velocities)+1))
 
 func _physics_process(delta):
 	if mouse_drag:
 		var collision = move_and_collide(get_local_mouse_position())
 		if collision != null and collision.get_collider() is RigidBody2D:
 			collision.get_collider().apply_central_impulse(-collision.get_normal() * 80.0)
-
+		if len(mouse_last_velocities) <= 5:
+			mouse_last_velocities.append(Input.get_last_mouse_velocity())
+		else:
+			mouse_last_velocities.remove_at(0)
+			mouse_last_velocities.append(Input.get_last_mouse_velocity())
 
 func _on_mouse_entered() -> void:
 	$Handle.material.set_shader_parameter("blink",true)
