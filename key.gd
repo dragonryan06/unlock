@@ -1,10 +1,6 @@
 @tool
 extends RigidBody2D
 
-## I made some big mistakes with scaling and shit early on but I don't think it's worth fixing cause
-## this is just for fun and we're on super limited time but uhhh yeah i definitely hardcoded some
-## weird-ass values down there please pay them no mind!
-
 @export_category("Generation Params")
 @export var key_seed := 0 :
 	set(new_seed):
@@ -23,6 +19,20 @@ extends RigidBody2D
 		key_amplitude = new_amp
 		generate_teeth()
 
+# store a reference to defaults for the settings menu's purposes
+static var defaults = {
+	"key_seed" : 0,
+	"key_length" : 1000,
+	"key_resolution" : 75,
+	"key_amplitude" : 1.0
+}
+
+## numbers literally cannot get more magical than this
+## (these are alignment values for keybase1.svg, though due to many scaling mistakes
+## and a serious lack of time, i just threw them in because they made it work and didnt bother to
+## fix it. If you were to make a whole game out of this, step one would be to either remove this
+## offset math right away and fix the scaling, or simply store them all in a YAML file or something
+## with the key svgs and read them when you read the image to a texture.
 @export_category("PLEASE AVERT YOUR EYES GOOD LORD THIS IS SIN")
 @export var key_leftmost_node := 186 :
 	set(new_leftmost):
@@ -71,9 +81,6 @@ func generate_teeth() -> void:
 		simplified_teeth.append(Vector2(key_length*0.5,key_top_offset*0.5)+Vector2(22,-1.5)*10.0)
 		simplified_teeth.append(Vector2(-64,key_top_offset*0.5)+Vector2(22,-1.5)*10.0)
 		$Hitbox.set_polygon(Geometry2D.merge_polygons(simplified_teeth,$Hitbox.polygon)[0])
-		#hit_poly.insert(34,Vector2(key_length,last_height))
-		#hit_poly.insert(35,Vector2(key_length,key_top_offset))
-		#$Hitbox.set_polygon(PackedVector2Array(Geometry2D.merge_polygons($Hitbox.polygon, simplified_teeth)))
 
 func _input(event:InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

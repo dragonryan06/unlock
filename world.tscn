@@ -1,10 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1hrdwq8i5wol"]
+[gd_scene load_steps=7 format=3 uid="uid://c1hrdwq8i5wol"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_v5n1n"]
 [ext_resource type="Script" path="res://freecam.gd" id="2_655sw"]
-[ext_resource type="Texture2D" uid="uid://cistlqroeolp" path="res://icon.svg" id="2_sjvv5"]
-[ext_resource type="Script" path="res://lock.gd" id="4_kshmj"]
-[ext_resource type="PackedScene" uid="uid://7bvgg3gdhy6o" path="res://lock_pin.tscn" id="5_mlurn"]
+[ext_resource type="PackedScene" uid="uid://de4ix0nxorx7i" path="res://lock.tscn" id="4_dvfac"]
 
 [sub_resource type="Gradient" id="Gradient_gkyhi"]
 offsets = PackedFloat32Array(0.0843373, 0.506024, 0.933735)
@@ -15,107 +13,214 @@ gradient = SubResource("Gradient_gkyhi")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_erkrg"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qhrvs"]
-radius = 11.0454
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_brht4"]
-size = Vector2(71, 86)
-
 [node name="World" type="Node2D"]
 script = ExtResource("1_v5n1n")
 possible_key_colors = SubResource("GradientTexture1D_jkapc")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="WorldBounds" type="StaticBody2D" parent="."]
 position = Vector2(569, 648)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds"]
 shape = SubResource("WorldBoundaryShape2D_erkrg")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(0, 831)
-scale = Vector2(13, 13)
-texture = ExtResource("2_sjvv5")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(0, -863)
+rotation = -3.14159
+shape = SubResource("WorldBoundaryShape2D_erkrg")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(-725, -447)
+rotation = 1.57079
+shape = SubResource("WorldBoundaryShape2D_erkrg")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(725, -447)
+rotation = -7.85397
+shape = SubResource("WorldBoundaryShape2D_erkrg")
+
+[node name="ColorRect" type="ColorRect" parent="WorldBounds"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -765.0
+offset_right = 765.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.691357, 0.691357, 0.691357, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="WorldBounds"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -765.0
+offset_top = -863.0
+offset_right = -725.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.691357, 0.691357, 0.691357, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="WorldBounds"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 725.0
+offset_top = -863.0
+offset_right = 765.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.691357, 0.691357, 0.691357, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="WorldBounds"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -765.0
+offset_top = -903.0
+offset_right = 765.0
+offset_bottom = -863.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.691357, 0.691357, 0.691357, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="WorldBounds"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -725.0
+offset_top = -863.0
+offset_right = 725.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.298039, 0.298039, 0.298039, 1)
 
 [node name="Freecam" type="Camera2D" parent="."]
 position = Vector2(578, 327)
 script = ExtResource("2_655sw")
 
-[node name="TESTLOCK" type="Node2D" parent="."]
-position = Vector2(1036, 323)
-script = ExtResource("4_kshmj")
+[node name="TESTLOCK" parent="." instance=ExtResource("4_dvfac")]
 
-[node name="SnapArea" type="Area2D" parent="TESTLOCK"]
-collision_layer = 3
-collision_mask = 3
+[node name="Instructions" type="Label" parent="."]
+offset_left = -141.0
+offset_top = -202.0
+offset_right = 387.0
+offset_bottom = -179.0
+text = "RMB to generate a new key, use LMB & drag to interact with physics."
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TESTLOCK/SnapArea"]
-position = Vector2(-15, -19)
-shape = SubResource("CircleShape2D_qhrvs")
-debug_color = Color(0.247059, 1, 0, 0.419608)
+[node name="Instructions3" type="Label" parent="."]
+offset_left = 791.0
+offset_top = 246.0
+offset_right = 1319.0
+offset_bottom = 269.0
+text = "Very buggy lock example"
+horizontal_alignment = 1
 
-[node name="StaticBody2D" type="StaticBody2D" parent="TESTLOCK"]
+[node name="Instructions2" type="RichTextLabel" parent="."]
+offset_left = 972.0
+offset_top = 376.0
+offset_right = 1144.0
+offset_bottom = 451.0
+mouse_filter = 2
+text = "0 - PIN_TYPE.DUMMY
+1 - PIN_TYPE.PRESS
+2 - PIN_TYPE.RELEASE"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TESTLOCK/StaticBody2D"]
-position = Vector2(21.5, 1)
-shape = SubResource("RectangleShape2D_brht4")
+[node name="SettingsPanel" type="Panel" parent="."]
+offset_left = -539.0
+offset_top = 265.0
+offset_right = -208.0
+offset_bottom = 649.0
 
-[node name="Slot" type="GrooveJoint2D" parent="TESTLOCK"]
-position = Vector2(52, -21)
-rotation = 1.5708
-node_b = NodePath("../StaticBody2D")
-bias = 0.5
-length = 64.0
-initial_offset = 1.0
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -119.5
+offset_right = 119.5
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 16
 
-[node name="Pins" type="Node2D" parent="TESTLOCK"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="LockPin" parent="TESTLOCK/Pins" instance=ExtResource("5_mlurn")]
-type = 1
-spring_length = 6
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Key Generation Settings"
 
-[node name="LockPin2" parent="TESTLOCK/Pins" instance=ExtResource("5_mlurn")]
-position = Vector2(14, 0)
-type = 2
-spring_length = 6
+[node name="GridContainer" type="GridContainer" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 16
+columns = 2
 
-[node name="LockPin3" parent="TESTLOCK/Pins" instance=ExtResource("5_mlurn")]
-position = Vector2(28, 0)
-spring_length = 6
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Random seed"
 
-[node name="LockPin4" parent="TESTLOCK/Pins" instance=ExtResource("5_mlurn")]
-position = Vector2(42, 0)
-type = 1
-spring_length = 6
+[node name="RandomSeed" type="LineEdit" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "r"
+alignment = 1
+metadata/varname = "key_seed"
 
-[node name="LazyProgrammerArt" type="CanvasGroup" parent="."]
-position = Vector2(1036, 323)
+[node name="Label2" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Length"
 
-[node name="ColorRect" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = -7.0
-offset_top = 36.0
-offset_right = 50.0
-offset_bottom = 44.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
+[node name="Length" type="LineEdit" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "r"
+alignment = 1
+metadata/varname = "key_length"
 
-[node name="ColorRect2" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = -14.0
-offset_top = -9.0
-offset_right = -7.0
-offset_bottom = 44.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
+[node name="Label3" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Resolution"
 
-[node name="ColorRect3" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = 50.0
-offset_top = -42.0
-offset_right = 57.0
-offset_bottom = 44.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
+[node name="Resolution" type="LineEdit" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "r"
+alignment = 1
+metadata/varname = "key_resolution"
 
-[node name="ColorRect4" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = -14.0
-offset_top = -42.0
-offset_right = 50.0
-offset_bottom = -29.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
+[node name="Label4" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Amplitude"
 
-[connection signal="body_entered" from="TESTLOCK/SnapArea" to="TESTLOCK" method="_on_snap_area_body_entered"]
+[node name="Amplitude" type="LineEdit" parent="SettingsPanel/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "r"
+alignment = 1
+metadata/varname = "key_amplitude"
+
+[node name="Label2" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "(Enter 'r' for random, 'd' for default)"
