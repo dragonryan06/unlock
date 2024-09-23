@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://7bvgg3gdhy6o"]
+
+[ext_resource type="Texture2D" uid="uid://b7j74oc04mdty" path="res://lockpinhead.svg" id="1_hgvht"]
+[ext_resource type="Script" path="res://lock_pin.gd" id="1_mvuqy"]
+[ext_resource type="Texture2D" uid="uid://dy8xubykdydt5" path="res://lockpinspringtile.svg" id="2_y8263"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgxpb"]
+size = Vector2(124, 224)
+
+[node name="LockPin" type="StaticBody2D"]
+modulate = Color(0.756863, 0.67451, 0.380392, 1)
+scale = Vector2(0.1, 0.1)
+script = ExtResource("1_mvuqy")
+
+[node name="Spring" type="CanvasGroup" parent="."]
+
+[node name="SpringTile" type="Sprite2D" parent="Spring"]
+position = Vector2(-2, 142)
+texture = ExtResource("2_y8263")
+
+[node name="PinHead" type="Sprite2D" parent="."]
+texture = ExtResource("1_hgvht")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(60, -112)
+target_position = Vector2(-120, 0)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_dgxpb")

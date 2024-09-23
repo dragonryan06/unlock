@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buhtrqyv8ogou"
-path="res://.godot/imported/lockbase1.svg-f29ee00ee5f0625df7c9b289e508f6c5.ctex"
+uid="uid://b7j74oc04mdty"
+path="res://.godot/imported/lockpinhead.svg-7d37d2a8bb805e3be82f27223c114bff.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://lockbase1.svg"
-dest_files=["res://.godot/imported/lockbase1.svg-f29ee00ee5f0625df7c9b289e508f6c5.ctex"]
+source_file="res://lockpinhead.svg"
+dest_files=["res://.godot/imported/lockpinhead.svg-7d37d2a8bb805e3be82f27223c114bff.ctex"]
 
 [params]
 
@@ -22,7 +22,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -33,6 +33,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=4.0
+svg/scale=2.0
 editor/scale_with_editor_scale=true
 editor/convert_colors_with_editor_theme=false

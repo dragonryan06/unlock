@@ -6,7 +6,7 @@ extends RigidBody2D
 ## weird-ass values down there please pay them no mind!
 
 @export_category("Generation Params")
-@export var key_seed := 0.0 :
+@export var key_seed := 0 :
 	set(new_seed):
 		key_seed = new_seed
 		generate_teeth()
@@ -44,9 +44,10 @@ func _ready() -> void:
 	generate_teeth()
 
 func generate_teeth() -> void:
-	remove_child($Hitbox)
-	add_child(load("res://key_handle1_hitbox.tscn").instantiate())
 	if has_node("Teeth"):
+		if has_node("Hitbox"):
+			remove_child($Hitbox)
+		add_child(load("res://key_handle1_hitbox.tscn").instantiate())
 		seed(key_seed)
 		var poly = []
 		poly.append(Vector2(key_length,key_top_offset))
@@ -87,8 +88,9 @@ func _input(event:InputEvent) -> void:
 				total_velocity+=v
 			total_velocity+=Input.get_last_mouse_velocity()
 			apply_central_impulse(total_velocity/(len(mouse_last_velocities)+1))
+			apply_central_impulse(Input.get_last_mouse_velocity())
 
-func _physics_process(delta):
+func _physics_process(_delta:float) -> void:
 	if mouse_drag:
 		var collision = move_and_collide(get_local_mouse_position())
 		if collision != null and collision.get_collider() is RigidBody2D:

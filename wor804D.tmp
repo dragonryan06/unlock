@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1hrdwq8i5wol"]
+[gd_scene load_steps=12 format=3 uid="uid://c1hrdwq8i5wol"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_v5n1n"]
 [ext_resource type="Script" path="res://freecam.gd" id="2_655sw"]
 [ext_resource type="Texture2D" uid="uid://cistlqroeolp" path="res://icon.svg" id="2_sjvv5"]
 [ext_resource type="Script" path="res://lock.gd" id="4_kshmj"]
 [ext_resource type="PackedScene" uid="uid://7bvgg3gdhy6o" path="res://lock_pin.tscn" id="5_mlurn"]
+[ext_resource type="PackedScene" uid="uid://fynn4bqfvy7q" path="res://key.tscn" id="6_psbl7"]
 
 [sub_resource type="Gradient" id="Gradient_gkyhi"]
 offsets = PackedFloat32Array(0.0843373, 0.506024, 0.933735)
@@ -15,11 +16,10 @@ gradient = SubResource("Gradient_gkyhi")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_erkrg"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qhrvs"]
-radius = 11.0454
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbjuo"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_brht4"]
-size = Vector2(71, 86)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brbfc"]
+size = Vector2(78, 20)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_v5n1n")
@@ -44,27 +44,23 @@ script = ExtResource("2_655sw")
 position = Vector2(1036, 323)
 script = ExtResource("4_kshmj")
 
-[node name="SnapArea" type="Area2D" parent="TESTLOCK"]
-collision_layer = 3
-collision_mask = 3
+[node name="LockBody" type="StaticBody2D" parent="TESTLOCK"]
+position = Vector2(56, -22)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TESTLOCK/SnapArea"]
-position = Vector2(-15, -19)
-shape = SubResource("CircleShape2D_qhrvs")
-debug_color = Color(0.247059, 1, 0, 0.419608)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TESTLOCK/LockBody"]
+shape = SubResource("RectangleShape2D_dbjuo")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="TESTLOCK"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TESTLOCK/StaticBody2D"]
-position = Vector2(21.5, 1)
-shape = SubResource("RectangleShape2D_brht4")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TESTLOCK/LockBody"]
+position = Vector2(-28, -20)
+shape = SubResource("RectangleShape2D_brbfc")
 
 [node name="Slot" type="GrooveJoint2D" parent="TESTLOCK"]
-position = Vector2(52, -21)
+position = Vector2(45, -22)
 rotation = 1.5708
-node_b = NodePath("../StaticBody2D")
+node_a = NodePath("../../Key")
+node_b = NodePath("../LockBody")
 bias = 0.5
-length = 64.0
+disable_collision = false
 initial_offset = 1.0
 
 [node name="Pins" type="Node2D" parent="TESTLOCK"]
@@ -74,48 +70,18 @@ type = 1
 spring_length = 6
 
 [node name="LockPin2" parent="TESTLOCK/Pins" instance=ExtResource("5_mlurn")]
-position = Vector2(14, 0)
+position = Vector2(13, 0)
 type = 2
 spring_length = 6
 
 [node name="LockPin3" parent="TESTLOCK/Pins" instance=ExtResource("5_mlurn")]
-position = Vector2(28, 0)
+position = Vector2(26, 0)
 spring_length = 6
 
 [node name="LockPin4" parent="TESTLOCK/Pins" instance=ExtResource("5_mlurn")]
-position = Vector2(42, 0)
+position = Vector2(39, 0)
 type = 1
 spring_length = 6
 
-[node name="LazyProgrammerArt" type="CanvasGroup" parent="."]
-position = Vector2(1036, 323)
-
-[node name="ColorRect" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = -7.0
-offset_top = 36.0
-offset_right = 50.0
-offset_bottom = 44.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = -14.0
-offset_top = -9.0
-offset_right = -7.0
-offset_bottom = 44.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
-
-[node name="ColorRect3" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = 50.0
-offset_top = -42.0
-offset_right = 57.0
-offset_bottom = 44.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
-
-[node name="ColorRect4" type="ColorRect" parent="LazyProgrammerArt"]
-offset_left = -14.0
-offset_top = -42.0
-offset_right = 50.0
-offset_bottom = -29.0
-color = Color(0.446777, 0.446777, 0.446777, 1)
-
-[connection signal="body_entered" from="TESTLOCK/SnapArea" to="TESTLOCK" method="_on_snap_area_body_entered"]
+[node name="Key" parent="." instance=ExtResource("6_psbl7")]
+position = Vector2(967, 301)

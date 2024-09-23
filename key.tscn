@@ -1,18 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://fynn4bqfvy7q"]
+[gd_scene load_steps=7 format=3 uid="uid://fynn4bqfvy7q"]
 
 [ext_resource type="Script" path="res://key.gd" id="1_1qass"]
-[ext_resource type="Texture2D" uid="uid://buhtrqyv8ogou" path="res://lockbase1.svg" id="1_3dmgk"]
+[ext_resource type="Texture2D" uid="uid://buhtrqyv8ogou" path="res://keybase1.svg" id="1_3dmgk"]
 [ext_resource type="Shader" path="res://key.gdshader" id="4_b3hbx"]
-[ext_resource type="PackedScene" uid="uid://dr23l1a85amup" path="res://key_handle1_hitbox.tscn" id="4_erics"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wwkdj"]
 rough = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gm3ix"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dylsn"]
 shader = ExtResource("4_b3hbx")
 shader_parameter/blink = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rywy2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_33xpe"]
 shader = ExtResource("4_b3hbx")
 shader_parameter/blink = false
 
@@ -20,30 +19,25 @@ shader_parameter/blink = false
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_wwkdj")
 center_of_mass_mode = 1
-center_of_mass = Vector2(8, 0)
-freeze_mode = 1
+center_of_mass = Vector2(16, 0)
 contact_monitor = true
 max_contacts_reported = 64
 script = ExtResource("1_1qass")
 
 [node name="Handle" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_gm3ix")
+material = SubResource("ShaderMaterial_dylsn")
 position = Vector2(3.55271e-15, 1)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_3dmgk")
 
 [node name="Teeth" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_rywy2")
+material = SubResource("ShaderMaterial_33xpe")
 position = Vector2(22, -0.465302)
 scale = Vector2(0.05, 0.05)
 polygon = PackedVector2Array(1000, -167, 0, -167, 0, 186, 75, 120.227, 150, 197.646, 225, 116.887, 300, 187.294, 375, 170.873, 450, 101.871, 525, 123.187, 600, 154.225, 675, 163.711, 750, 178.433, 825, 161.739, 900, 186.471, 975, 165.361, 1000, 0, 1000, -167)
 uv = PackedVector2Array(1000, -167, 0, -167, 0, 186, 75, 120.227, 150, 197.646, 225, 116.887, 300, 187.294, 375, 170.873, 450, 101.871, 525, 123.187, 600, 154.225, 675, 163.711, 750, 178.433, 825, 161.739, 900, 186.471, 975, 165.361, 1000, 0, 1000, -167)
 
-[node name="Hitbox" parent="." instance=ExtResource("4_erics")]
-polygon = PackedVector2Array(45, -223, 45, -219.9, 81, -200.8, 81, -197.1, 133.6, -104.9, 227, -99.6, 227, -98.5, 720, -98.5, 720, 78, 227, 78, 227, 80, 206.9, 80, 138.5, 87.4, 81.7, 189, 77, 189, 35, 212, 28.7, 212, -28, 216.7, -28, 211.8, -87, 181.9, -87, 176.8, -117.2, 112, -202, 62.6, -202, 57.5, -224, 3.60001, -224, -17.2, -208.9, -66, -205.4, -66, -169.3, -102, -165.4, -102, -117.5, -121.1, -76.9, -200, -73.1, -200, -25, -226.8, -25, -232.1)
-
 [node name="TeethArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 2
 
