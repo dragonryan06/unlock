@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://7bvgg3gdhy6o"]
 
-[ext_resource type="Texture2D" uid="uid://b7j74oc04mdty" path="res://lockpinhead.svg" id="1_hgvht"]
-[ext_resource type="Script" path="res://lock_pin.gd" id="1_mvuqy"]
-[ext_resource type="Texture2D" uid="uid://dy8xubykdydt5" path="res://lockpinspringtile.svg" id="2_y8263"]
+[ext_resource type="Texture2D" uid="uid://b7j74oc04mdty" path="res://lock/lockpinhead.svg" id="1_hgvht"]
+[ext_resource type="Script" path="res://lock/lock_pin.gd" id="1_mvuqy"]
+[ext_resource type="Texture2D" uid="uid://dy8xubykdydt5" path="res://lock/lockpinspringtile.svg" id="2_y8263"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgxpb"]
 size = Vector2(124, 224)

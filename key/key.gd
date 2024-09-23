@@ -57,7 +57,7 @@ func generate_teeth() -> void:
 	if has_node("Teeth"):
 		if has_node("Hitbox"):
 			remove_child($Hitbox)
-		add_child(load("res://key_handle1_hitbox.tscn").instantiate())
+		add_child(load("res://key/key_handle1_hitbox.tscn").instantiate())
 		seed(key_seed)
 		var poly = []
 		poly.append(Vector2(key_length,key_top_offset))

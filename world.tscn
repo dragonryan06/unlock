@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://world.gd" id="1_v5n1n"]
 [ext_resource type="Script" path="res://freecam.gd" id="2_655sw"]
-[ext_resource type="PackedScene" uid="uid://de4ix0nxorx7i" path="res://lock.tscn" id="4_dvfac"]
+[ext_resource type="PackedScene" uid="uid://de4ix0nxorx7i" path="res://lock/lock.tscn" id="4_dvfac"]
 
 [sub_resource type="Gradient" id="Gradient_gkyhi"]
 offsets = PackedFloat32Array(0.0843373, 0.506024, 0.933735)

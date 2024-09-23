@@ -1,18 +1,18 @@
 [gd_scene load_steps=7 format=3 uid="uid://fynn4bqfvy7q"]
 
-[ext_resource type="Script" path="res://key.gd" id="1_1qass"]
-[ext_resource type="Texture2D" uid="uid://buhtrqyv8ogou" path="res://keybase1.svg" id="1_3dmgk"]
-[ext_resource type="Shader" path="res://key.gdshader" id="4_b3hbx"]
+[ext_resource type="Script" path="res://key/key.gd" id="1_rma2r"]
+[ext_resource type="Shader" path="res://key/key.gdshader" id="2_wp4wi"]
+[ext_resource type="Texture2D" uid="uid://buhtrqyv8ogou" path="res://key/keybase1.svg" id="3_ajsms"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wwkdj"]
 rough = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_88mtn"]
-shader = ExtResource("4_b3hbx")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ngofv"]
+shader = ExtResource("2_wp4wi")
 shader_parameter/blink = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxneg"]
-shader = ExtResource("4_b3hbx")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rljr2"]
+shader = ExtResource("2_wp4wi")
 shader_parameter/blink = false
 
 [node name="Key" type="RigidBody2D"]
@@ -22,16 +22,16 @@ center_of_mass_mode = 1
 center_of_mass = Vector2(16, 0)
 contact_monitor = true
 max_contacts_reported = 64
-script = ExtResource("1_1qass")
+script = ExtResource("1_rma2r")
 
 [node name="Handle" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_88mtn")
+material = SubResource("ShaderMaterial_ngofv")
 position = Vector2(3.55271e-15, 1)
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_3dmgk")
+texture = ExtResource("3_ajsms")
 
 [node name="Teeth" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_cxneg")
+material = SubResource("ShaderMaterial_rljr2")
 position = Vector2(22, -0.465302)
 scale = Vector2(0.05, 0.05)
 polygon = PackedVector2Array(1000, -167, 0, -167, 0, 186, 75, 120.227, 150, 197.646, 225, 116.887, 300, 187.294, 375, 170.873, 450, 101.871, 525, 123.187, 600, 154.225, 675, 163.711, 750, 178.433, 825, 161.739, 900, 186.471, 975, 165.361, 1000, 0, 1000, -167)

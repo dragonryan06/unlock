@@ -1,6 +1,6 @@
 extends Node2D
 
-var Key = preload("res://key.tscn")
+var Key = preload("res://key/key.tscn")
 var rand = RandomNumberGenerator.new()
 
 @export var possible_key_colors : GradientTexture1D
